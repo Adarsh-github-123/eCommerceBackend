@@ -21,12 +21,14 @@ router.route('/getAllItems').get(
 router.route('/createItem').post(
     async(req, res) => {
         try{
-            const newItem = new Item({
-                itemName: "Xyz",
-                itemPrice : 100
-            });
+            // const newItem = new Item({
+            //     itemName: "Xyz",
+            //     itemPrice : 100
+            //});
+            //await Tour.create(req.body);
+            const newItem = await Item.create(req.body);
     
-            const saveItem = await newItem.save();
+            //const saveItem = await newItem.save();
             res.status(200).json({
                 message: "Success"
             })
@@ -38,6 +40,22 @@ router.route('/createItem').post(
         }
 
 
+    }
+)
+
+router.route('/getItem/:id').get(
+    async(req, res) => {
+        try{
+            const items = await Item.findById(req.params.id);
+            res.status(200).json({
+                message: items
+            })
+        }catch(err){
+            console.log("There is some error 💥");
+            res.status(404).json({
+                message: 'Error'
+            })
+        }
     }
 )
 
