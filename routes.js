@@ -46,7 +46,7 @@ router.route('/createItem').post(
 router.route('/getItem/:id').get(
     async(req, res) => {
         try{
-            const items = await Item.findById(req.params.id);
+            const items = await Item.find({_id: req.params.id});
             res.status(200).json({
                 message: items
             })
