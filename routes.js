@@ -57,6 +57,38 @@ router.route('/getItem/:id').get(
             })
         }
     }
+);
+
+router.route('/deleteItem/:id').delete(
+    async(req, res) => {
+        try{
+            await Item.deleteOne({_id: req.params.id});
+            res.status(200).json({
+                message: "Success"
+            })
+        } catch(e){
+            res.status(404).json({
+                message: 'Error'
+            })
+        }
+    }
+)
+
+router.route('/updateItem/:id').post(
+    async(req, res) => {
+        try{
+            const item = await Item.find({_id:req.params.id});
+            const condition = {...item,...req.body}
+            const updatedItem =await Item.findOneAndUpdate({_id: req.params.id}, condition)
+            res.status(200).json({
+                message: "Success"
+            })
+        }catch(err){
+            res.status(404).json({
+                message: 'Error'
+            })
+        }
+    }
 )
 
 module.exports = router;
